@@ -14,8 +14,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function App() {
-  const [accounts, setAccounts] = useState('[]');
-  // useEffect(() => {
+  const [accountsStatus, setAccountsStatus] = useState('Not Started.');
+  const [aliceAddress, setAliceAddress] = useState('');
+  const [bobAddress, setBobAddress] = useState('');
+  const [carlaAddress, setCarlaAddress] = useState('');
+
+    // useEffect(() => {
   //    fetch('http://127.0.0.1:5000/accounts')
   //       .then((response) => response.json()
   //       .then((data) => {
@@ -29,13 +33,16 @@ function App() {
 
 
   function createAccounts() {
-      alert('Hello!');
       console.log("createAccounts");
-      fetch('http://127.0.0.1:5000/accounts')
+      setAccountsStatus("Creating Accounts");
+      fetch('http://127.0.0.1:5000/auction/start')
           .then((response) => response.json()
               .then((data) => {
-                  console.log(data);
-                  setAccounts(data);
+                    console.log(data);
+                    setAccountsStatus("Accounts created");
+                    setAliceAddress(data.seller);
+                    setBobAddress(data.creator);
+                    setCarlaAddress(data.bidder);
               })
               .catch((err) => {
                   console.log(err.message);
@@ -47,23 +54,31 @@ function App() {
       <h1>Algorand Auction Demo dApp</h1>
 
         <Grid container spacing={2}>
-            <button onClick={() => createAccounts()} >
-                Create Accounts
-            </button>
-            <div>
-                {JSON.stringify(accounts)}
-            </div>
+            <Grid item xs={2}>
+            </Grid>
+            <Grid item xs={8}>
+                <button style={{minHeight: "60px"}} onClick={() => createAccounts()} >
+                    Create Accounts
+                </button>
+                {accountsStatus}
+            </Grid>
+            <Grid item xs={2}>
+            </Grid>
+
         </Grid>
       <Grid container spacing={2}>
 
         <Grid item xs={4}>
-          <Item>Creator</Item>
+            <Item>Alice (seller account)</Item>
+            <Item>Address: {aliceAddress}</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>Seller</Item>
+            <Item>Bob (auction creator account)</Item>
+            <Item>Address: {bobAddress}</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>Bidder</Item>
+            <Item>Carla (bidder account)</Item>
+            <Item>Address: {carlaAddress}</Item>
         </Grid>
       </Grid>
     </>
