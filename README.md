@@ -1,31 +1,38 @@
-# Algorand Auction Demo
+# HackaOne 2023 Spring Workshop Lab - dApp 101 - Algorand Auction Demo
 
-This demo is an on-chain NFT auction using smart contracts on the Algorand blockchain.
+This demo is the main content for the workshop for HackaOne 2023 Spring, implementing an on-chain NFT auction using smart contracts on the Algorand blockchain.
+The workshop slides can be found at: https://docs.google.com/presentation/d/1Acqma6bzBFtZi2_AekI5MN4n_ah7OKmQ4q-TVtRzJYw/edit#slide=id.p
 
 ## Usage
 
-The file `auction/operations.py` provides a set of functions that can be used to create and interact
-with auctions. See that file for documentation.
+### Step 1: Start Algorand Blockchain local Environment
+```
+./sandbox up
+```
 
-## Development Setup
+### Step 2: Start backend service
+This service will serve as the blockchain client and call the blockchain functionalities via sandbox shell scripts or python library.
+In a seperate window, run the following:
+```
+pipenv shell
+pipenv install
+flask run
+```
+The service will be serving on 
+```
+http://127.0.0.1:5000
+```
+Run the following to verify the blockchain env is up and running. The following shall return a list of accounts in JSON format.
+```
+curl http://127.0.0.1:5000/accounts
+[{"status": "offline", "address": "QJFSGTSIQ7XHNBS5KOQGIJRQWLIHWGFZMGGMR3RLUX7EFNXX6O6ZP3DQHA"}, {"status": "offline", "address": "YFWCRRT6F54AETG23YHHKK5HTMBEGL3ACMIWFLNKOYJXX4P7DPPWJJCSSE"}, {"status": "online", "address": "2US5CPRUKRLL7L6U7ZGAAVR42PBMXY2CN4SVC6PN5FEH5VZQRLTKA5S7FY"}]
+```
 
-This repo requires Python 3.6 or higher. We recommend you use a Python virtual environment to install
-the required dependencies.
-
-Set up venv (one time):
- * `python3 -m venv venv`
-
-Active venv:
- * `. venv/bin/activate` (if your shell is bash/zsh)
- * `. venv/bin/activate.fish` (if your shell is fish)
-
-Install dependencies:
-* `pip install -r requirements.txt`
-
-Run tests:
-* First, start an instance of [sandbox](https://github.com/algorand/sandbox) (requires Docker): `./sandbox up nightly`
-* `pytest`
-* When finished, the sandbox can be stopped with `./sandbox down`
-
-Format code:
-* `black .`
+### Step  3 - Start the local Web-app (written in React)
+In a seperate window, run the following:
+```
+cd auction-app
+npm install
+npm start
+```
+The web-app will start a browser to access the web-app at: http://localhost:3000
