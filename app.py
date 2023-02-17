@@ -1,7 +1,9 @@
 from flask import Flask
+from flask_cors import CORS
 import re
 import subprocess
 import json
+
 
 from algosdk import account, encoding
 from algosdk.logic import get_application_address
@@ -128,7 +130,7 @@ def simple_auction():
 
 
 app = Flask(__name__)
-
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/accounts')
 def accounts():
@@ -146,7 +148,8 @@ def accounts():
                 "address": m.group(2)
             })
 
-    return json.dumps(results)
+    print(json.dumps(results))
+    return results
 
 
 @app.route('/auction/start')
