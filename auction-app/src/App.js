@@ -14,34 +14,56 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function App() {
-  const [posts, setPosts] = useState('[]');
-  useEffect(() => {
-     fetch('http://127.0.0.1:5000/accounts')
-        .then((response) => response.json()
-        .then((data) => {
-           console.log(data);
-           setPosts(data);
-        })
-        .catch((err) => {
-           console.log(err.message);
-        }));
-  }, []);
+  const [accounts, setAccounts] = useState('[]');
+  // useEffect(() => {
+  //    fetch('http://127.0.0.1:5000/accounts')
+  //       .then((response) => response.json()
+  //       .then((data) => {
+  //          console.log(data);
+  //          setPosts(data);
+  //       })
+  //       .catch((err) => {
+  //          console.log(err.message);
+  //       }));
+  // }, []);
+
+
+  function createAccounts() {
+      alert('Hello!');
+      console.log("createAccounts");
+      fetch('http://127.0.0.1:5000/accounts')
+          .then((response) => response.json()
+              .then((data) => {
+                  console.log(data);
+                  setAccounts(data);
+              })
+              .catch((err) => {
+                  console.log(err.message);
+              }));
+  }
+
   return (
     <>
       <h1>Algorand Auction Demo dApp</h1>
+
+        <Grid container spacing={2}>
+            <button onClick={() => createAccounts()} >
+                Create Accounts
+            </button>
+            <div>
+                {JSON.stringify(accounts)}
+            </div>
+        </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <Item>xs=8</Item>
-          <p>{JSON.stringify(posts)}</p>
+
+        <Grid item xs={4}>
+          <Item>Creator</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>xs=4</Item>
+          <Item>Seller</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>xs=4</Item>
-        </Grid>
-        <Grid item xs={8}>
-          <Item>xs=8</Item>
+          <Item>Bidder</Item>
         </Grid>
       </Grid>
     </>
